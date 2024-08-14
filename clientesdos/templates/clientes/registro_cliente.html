@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Cliente</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+    <h3 class="mb-6">Empresa de eventos M y M</h2>
+    </div>
+    <div class="container mt-4">
+        <h2 class="mb-4">Registro de Cliente</h2>
+        <form method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    {% for field in form %}
+                        {% if field.name not in 'sillas,mesa_4,meson_10,forros_silla,cintas_silla,manteles_grandes,manteles_pequeños,sillas_niño,copa_champaña' %}
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ field.errors|join:", " }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="col-md-6">
+                    <h4>Cantidades de Alquiler</h4>
+                    {% for field in form %}
+                        {% if field.name in 'sillas,mesa_4,meson_10,forros_silla,cintas_silla,manteles_grandes,manteles_pequeños,sillas_niño,copa_champaña' %}
+                            <div class="form-group row">
+                                <label for="{{ field.id_for_label }}" class="col-sm-6 col-form-label">{{ field.label }}</label>
+                                <div class="col-sm-6">
+                                    {{ field }}
+                                    {% if field.errors %}
+                                        <div class="invalid-feedback">
+                                            {{ field.errors|join:", " }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Registrar Cliente</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
